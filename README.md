@@ -2,33 +2,93 @@
 
 zync is a utility tool for python operations.
 
-## Installation
+## INSTALLATION
 
-```pip install zync```
+```bash
+pip install zync
+```
 
 ## Usage
 
-### 1. Import
+### 1. IMPORT
 
-```from zync import *```
+```python
+from zync import *
+```
 
-### 2. Functions
+### 2. FUNCTIONS
 
-1. logger  
+#### 1. logger
+
 logger takes in a string and logs it with an INFO level.  
-```logger("info message")```  
 
-2. bugger
+```python
+from zync import logger
+
+# logging a string INFO
+logger("info message")
+
+# logging a variable INFO
+message = "info message"
+logger(message)
+
+###
+# returns: INFO info message
+```  
+
+#### 2. bugger
+
 bugger takes in a string and logs it with a DEBUG level.  
-```bugger("debug message")```  
 
-3. Slugger  
+```python
+from zync import bugger
+
+# logging a string DEBUG
+bugger("debug message")
+
+# logging a variable DEBUG
+message = "debug message"
+bugger(message)
+
+###
+# returns: DEBUG debug message
+```  
+
+#### 3. Slugger  
+
 Slugger converts a string to slug while maintaining capitalization.  
-```Slugger("string")```  
+
+```python
+from zynce import Slugger
+
+# Slugging a string with Caps
+Slugger("Test String")
+
+# Slugging a variable with caps
+string = "Test String"
+Slugger = (string)
+
+###
+# returns: Test-String
+```  
   
-4. slugger  
-slugger converts a string to a slug with no capitalization  
-```slugger("string")```  
+#### 4. slugger  
+
+slugger converts a string to a slug with no capitalization.
+
+```python
+from zynce import Slugger
+
+# Slugging a string without Caps
+slugger("Test String")
+
+# Slugging a variable without caps
+string = "Test String"
+slugger = (string)
+
+###
+# returns: test-string
+```  
 
 ## Author
 
