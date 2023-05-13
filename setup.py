@@ -1,6 +1,5 @@
 from setuptools import setup
 from zync.main import (
-    AUTHOR_EMAIL,
     NAME,
     DESCRIPTION,
     URL,
