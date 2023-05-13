@@ -1,4 +1,4 @@
-name: zyncify
+name: CI
 
 on:
   push:
