@@ -5,7 +5,7 @@ zync is a utility tool for python operations.
 ## INSTALLATION
 
 ```bash
-pip install zync
+pip install zyncify
 ```
 
 ## Usage
