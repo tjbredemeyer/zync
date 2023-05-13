@@ -3,7 +3,7 @@ This is the main file for the zync package.
 """
 
 import argparse
-from .__init__ import methods
+from .__init__ import __all__ as methods
 
 NAME = "zync"
 DESCRIPTION = "zync is a utility tool for python operations"
