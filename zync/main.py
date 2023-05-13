@@ -6,6 +6,7 @@ import argparse
 from .__init__ import __all__ as methods
 
 NAME = "zyncify"
+DISPLAY_NAME = "zync"
 DESCRIPTION = "zync is a utility tool for python operations"
 URL = "https://github.com/tjbredemeyer/zync"
 VERSION = "0.1.0"
@@ -15,7 +16,7 @@ LICENSE = "GNU Public License v3"
 
 info_string = (
     "\n"
-    f"name: {NAME}\n"
+    f"name: {DISPLAY_NAME}\n"
     f"version: {VERSION}\n"
     f"author: {AUTHOR} - {AUTHOR_EMAIL}\n"
     f"license: {LICENSE}\n"
