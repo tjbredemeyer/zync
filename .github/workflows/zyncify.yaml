@@ -26,11 +26,6 @@ jobs:
           pip install flake8
           flake8
 
-      - name: Unit Testing
-        run: |
-          pip install pytest
-          pytest
-
       - name: Code Coverage
         run: |
           pip install pytest-cov
