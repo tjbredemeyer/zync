@@ -1,0 +1,41 @@
+name: Main Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.2
+
+      - name: Python Version Check
+        run: python --version
+
+      - name: Code Linting
+        run: |
+          pip install flake8
+          flake8
+
+      - name: Unit Testing
+        run: |
+          pip install pytest
+          pytest
+
+      - name: Code Coverage
+        run: |
+          pip install pytest-cov
+          pytest --cov=my_package --cov-report=xml
+
+      - name: Package Installation
+        run: |
+          pip install .
