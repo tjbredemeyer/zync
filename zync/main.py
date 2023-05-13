@@ -5,7 +5,7 @@ This is the main file for the zync package.
 import argparse
 from .__init__ import __all__ as methods
 
-NAME = "zync"
+NAME = "zyncify"
 DESCRIPTION = "zync is a utility tool for python operations"
 URL = "https://github.com/tjbredemeyer/zync"
 VERSION = "0.1.0"
