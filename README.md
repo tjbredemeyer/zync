@@ -1,6 +1,8 @@
 # zync
 
-zync is a utility tool for python operations. [![zync-ci](https://github.com/tjbredemeyer/zync/actions/workflows/ci.yml/badge.svg)](https://github.com/tjbredemeyer/zync/actions/workflows/ci.yml)
+zync is a utility tool for python operations.
+
+[![zync-ci](https://github.com/tjbredemeyer/zync/actions/workflows/ci.yml/badge.svg)](https://github.com/tjbredemeyer/zync/actions/workflows/ci.yml)
 
 ## INSTALLATION
 
