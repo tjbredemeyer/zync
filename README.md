@@ -59,7 +59,7 @@ bugger(message)
 Slugger converts a string to slug while maintaining capitalization.  
 
 ```python
-from zynce import Slugger
+from zync import Slugger
 
 # Slugging a string with Caps
 Slugger("Test String")
@@ -77,7 +77,7 @@ Slugger = (string)
 slugger converts a string to a slug with no capitalization.
 
 ```python
-from zynce import Slugger
+from zync import slugger
 
 # Slugging a string without Caps
 slugger("Test String")

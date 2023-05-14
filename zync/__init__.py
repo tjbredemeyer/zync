@@ -1,7 +1,13 @@
-from .logging import logger, bugger
+from .logger import logger, bugger, wagger, egger, critter, fatal
 from .slugify import Slugger, slugger
 
-__all__ = ["logger", "bugger", "Slugger", "slugger"]
-
-__version__ = "0.1.0"
-__author__ = "TJ Bredemeyer"
+__all__ = [
+    "bugger",
+    "logger",
+    "wagger",
+    "egger",
+    "critter",
+    "fatal",
+    "Slugger",
+    "slugger",
+]
