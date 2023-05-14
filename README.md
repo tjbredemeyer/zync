@@ -20,7 +20,7 @@ from zync import *
 
 ### 2. FUNCTIONS
 
-#### 1. logger
+#### logger
 
 logger takes in a string and logs it with an INFO level.  
 
@@ -38,7 +38,7 @@ logger(message)
 # returns: INFO info message
 ```  
 
-#### 2. bugger
+#### bugger
 
 bugger takes in a string and logs it with a DEBUG level.  
 
@@ -56,7 +56,25 @@ bugger(message)
 # returns: DEBUG debug message
 ```  
 
-#### 3. Slugger  
+#### egger
+
+egger takes in a string and logs it with an ERROR level.  
+
+```python
+from zync import egger
+
+# logging a string DEBUG
+egger("debug message")
+
+# logging a variable DEBUG
+message = "error message"
+egger(message)
+
+###
+# returns: DEBUG debug message
+```  
+
+#### Slugger  
 
 Slugger converts a string to slug while maintaining capitalization.  
 
@@ -74,7 +92,7 @@ Slugger(string)
 # returns: Test-String
 ```  
   
-#### 4. slugger  
+#### slugger  
 
 slugger converts a string to a slug with no capitalization.
 

@@ -1,6 +1,5 @@
 import logging
 import inspect
-import os
 
 
 W = "\033[39m"
