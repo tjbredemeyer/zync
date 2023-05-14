@@ -3,8 +3,6 @@ import inspect
 import os
 
 
-ROOT_PATH = os.getcwd() + "/"
-
 W = "\033[39m"
 B = "\033[94m"
 G = "\033[92m"
@@ -12,6 +10,7 @@ Y = "\033[33m"
 R = "\033[91m"
 M = "\033[35m"
 C = "\033[36m"
+L = "\033[2m"
 X = "\033[0m"
 
 
@@ -38,13 +37,10 @@ class Bugger:
         file_handler = logging.FileHandler(".zync.log")
         formatter = BuggerFormat(
             f"{G}[{X}"
-            f"{G}%(levelname)s{X}"
-            f"{R}:{X}"
-            f"{C}%(line)s{X}"
-            f"{G}@{X}"
-            f"{M}%(location)s{X}"
-            f"{G}%(asctime)s{X}"
+            f"{G}%(levelname)s:{X}"
+            f"{G}{L}%(asctime)s{X}"
             f"{G}]{X}"
+            f"{M}%(location)s{X}"
             f"{G}> {X}"
             f"%(message)s{X}",
             datefmt="%H:%M:%S",
@@ -63,13 +59,10 @@ class Logger:
         file_handler = logging.FileHandler(".zync.log")
         formatter = LoggerFormat(
             f"{Y}[{X}"
-            f"{Y}%(levelname)s{X}"
-            f"{R}:{X}"
-            f"{C}%(line)s{X}"
-            f"{Y}@{X}"
-            f"{M}%(location)s{X}"
-            f"{Y}%(asctime)s{X}"
+            f"{Y}%(levelname)s:{X}"
+            f"{Y}{L}%(asctime)s{X}"
             f"{Y}]{X}"
+            f"{M}%(location)s{X}"
             f"{Y}> {X}"
             f"%(message)s{X}",
             datefmt="%H:%M:%S",
@@ -85,22 +78,20 @@ bugger_base = Bugger("bugger")
 logger_base = Logger("logger")
 
 
-def strip_root_path(file_path, root_path):
-    relative_path = os.path.relpath(file_path, root_path)
-    return relative_path
-
-
 def bugger(log):
     frame = inspect.currentframe().f_back
+    path = inspect.getframeinfo(frame).filename
     line = inspect.getframeinfo(frame).positions.lineno
-    file_path = frame.f_code.co_filename
-    location = strip_root_path(file_path, ROOT_PATH)
-    return bugger_base(log, line, location)
+    col = inspect.getframeinfo(frame).positions.col_offset
+    url = "%s:%s:%s" % (path, line, col)
+    return bugger_base(log, line, url)
 
 
 def logger(log):
     frame = inspect.currentframe().f_back
+    path = inspect.getframeinfo(frame).filename
     line = inspect.getframeinfo(frame).positions.lineno
-    file_path = frame.f_code.co_filename
-    location = strip_root_path(file_path, ROOT_PATH)
-    return logger_base(log, line, location)
+    col = inspect.getframeinfo(frame).positions.col_offset
+    url = "%s:%s:%s" % (path, line, col)
+    log = f"<a href='{url}'>click here</a>"
+    return logger_base(log, line, url)
