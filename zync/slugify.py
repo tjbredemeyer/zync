@@ -1,7 +1,15 @@
+"""
+Slugify is a simple string formatter to make strings URL safe.
+"""
+
 import re
 
 
 def Slugger(value):
+    """
+    Slugger is a simple string formatter to make strings URL safe.
+    the uppercase S indicates that the original case should be preserved.
+    """
     # Remove leading/trailing whitespaces
     value = value.strip()
     # Replace spaces with hyphens
@@ -14,6 +22,10 @@ def Slugger(value):
 
 
 def slugger(value):
+    """
+    Slugger is a simple string formatter to make strings URL safe.
+    the lowercase S indicates that the original case should not be preserved.
+    """
     # Remove leading/trailing whitespaces
     value = value.strip()
     # Replace spaces with hyphens
