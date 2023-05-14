@@ -66,7 +66,7 @@ Slugger("Test String")
 
 # Slugging a variable with caps
 string = "Test String"
-Slugger = (string)
+Slugger(string)
 
 ###
 # returns: Test-String
@@ -84,7 +84,7 @@ slugger("Test String")
 
 # Slugging a variable without caps
 string = "Test String"
-slugger = (string)
+slugger(string)
 
 ###
 # returns: test-string
