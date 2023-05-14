@@ -1,4 +1,4 @@
-name: CI
+name: zync-ci
 
 on:
   push:
@@ -25,6 +25,9 @@ jobs:
         run: |
           pip install flake8
           flake8
+
+      - name: Run tests
+        run: python -m unittest discover -s . -p "*test*.py"
 
       - name: Package Installation
         run: |

@@ -1,24 +1,50 @@
 import logging
 import inspect
+import os
 
 
-WHITE = "\033[39m"
-BLUE = "\033[94m"
-GREEN = "\033[92m"
-YELLOW = "\033[93m"
-RED = "\033[91m"
-BOLD_RED = "\033[31;1m"
-RESET = "\033[0m"
+W = "\033[39m"
+B = "\033[94m"
+G = "\033[92m"
+Y = "\033[33m"
+R = "\033[91m"
+M = "\033[35m"
+C = "\033[36m"
+X = "\033[0m"
+
+
+class BuggerFormat(logging.Formatter):
+    def format(self, record):
+        record.levelname = "bugger"
+        levelname = record.levelname.upper()
+        record.levelname = levelname
+        return super().format(record)
+
+
+class LoggerFormat(logging.Formatter):
+    def format(self, record):
+        record.levelname = "logger"
+        levelname = record.levelname.upper()
+        record.levelname = levelname
+        return super().format(record)
 
 
 class Bugger:
     def __init__(self, name):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(logging.DEBUG)
-        file_handler = logging.FileHandler("zync.log")
-        formatter = logging.Formatter(
-            f"{WHITE}[%(levelname)s] %(asctime)s "
-            f"@ %(location)s (line %(line)s): %(message)s{RESET}",
+        file_handler = logging.FileHandler(".zync.log")
+        formatter = BuggerFormat(
+            f"{G}[{X}"
+            f"{G}%(levelname)s{X}"
+            f"{R}:{X}"
+            f"{C}%(line)s{X}"
+            f"{G}@{X}"
+            f"{M}%(location)s{X}"
+            f"{G}%(asctime)s{X}"
+            f"{G}]{X}"
+            f"{G}> {X}"
+            f"%(message)s{X}",
             datefmt="%H:%M:%S",
         )
         file_handler.setFormatter(formatter)
@@ -32,10 +58,18 @@ class Logger:
     def __init__(self, name):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(logging.INFO)
-        file_handler = logging.FileHandler("zync.log")
-        formatter = logging.Formatter(
-            f"{BLUE}[%(levelname)s] %(asctime)s "
-            f"@ %(location)s (line %(line)s): %(message)s{RESET}",
+        file_handler = logging.FileHandler(".zync.log")
+        formatter = LoggerFormat(
+            f"{Y}[{X}"
+            f"{Y}%(levelname)s{X}"
+            f"{R}:{X}"
+            f"{C}%(line)s{X}"
+            f"{Y}@{X}"
+            f"{M}%(location)s{X}"
+            f"{Y}%(asctime)s{X}"
+            f"{Y}]{X}"
+            f"{Y}> {X}"
+            f"%(message)s{X}",
             datefmt="%H:%M:%S",
         )
         file_handler.setFormatter(formatter)
@@ -45,119 +79,19 @@ class Logger:
         self.logger.info(log, extra={"line": line, "location": location})
 
 
-class Wagger:
-    def __init__(self, name):
-        self.logger = logging.getLogger(name)
-        self.logger.setLevel(logging.WARNING)
-        file_handler = logging.FileHandler("zync.log")
-        formatter = logging.Formatter(
-            f"{GREEN}[%(levelname)s] %(asctime)s "
-            f"@ %(location)s (line %(line)s): %(message)s{RESET}",
-            datefmt="%H:%M:%S",
-        )
-        file_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
-
-    def __call__(self, log, line, location):
-        self.logger.warning(log, extra={"line": line, "location": location})
-
-
-class Egger:
-    def __init__(self, name):
-        self.logger = logging.getLogger(name)
-        self.logger.setLevel(logging.ERROR)
-        file_handler = logging.FileHandler("zync.log")
-        formatter = logging.Formatter(
-            f"{YELLOW}[%(levelname)s] %(asctime)s "
-            f"@ %(location)s (line %(line)s): %(message)s{RESET}",
-            datefmt="%H:%M:%S",
-        )
-        file_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
-
-    def __call__(self, log, line, location):
-        self.logger.error(log, extra={"line": line, "location": location})
-
-
-class Critter:
-    def __init__(self, name):
-        self.logger = logging.getLogger(name)
-        self.logger.setLevel(logging.CRITICAL)
-        file_handler = logging.FileHandler("zync.log")
-        formatter = logging.Formatter(
-            f"{RED}[%(levelname)s] %(asctime)s "
-            f"@ %(location)s (line %(line)s): %(message)s{RESET}",
-            datefmt="%H:%M:%S",
-        )
-        file_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
-
-    def __call__(self, log, line, location):
-        self.logger.critical(log, extra={"line": line, "location": location})
-
-
-class Fatal:
-    def __init__(self, name):
-        self.logger = logging.getLogger(name)
-        self.logger.setLevel(logging.FATAL)
-        file_handler = logging.FileHandler("zync.log")
-        formatter = logging.Formatter(
-            f"{BOLD_RED}[%(levelname)s] %(asctime)s "
-            f"@ %(location)s (line %(line)s): %(message)s{RESET}",
-            datefmt="%H:%M:%S",
-        )
-        file_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
-
-    def __call__(self, log, line, location):
-        self.logger.fatal(log, extra={"line": line, "location": location})
-
-
 bugger_base = Bugger("bugger")
 logger_base = Logger("logger")
-wagger_base = Wagger("wagger")
-egger_base = Egger("egger")
-critter_base = Critter("critter")
-fatal_base = Fatal("fatal")
 
 
 def bugger(log):
     frame = inspect.currentframe().f_back
     line = inspect.getframeinfo(frame).positions.lineno
-    location = inspect.getframeinfo(frame).filename
+    location = os.path.basename(inspect.getframeinfo(frame).filename)
     return bugger_base(log, line, location)
 
 
 def logger(log):
     frame = inspect.currentframe().f_back
     line = inspect.getframeinfo(frame).positions.lineno
-    location = inspect.getframeinfo(frame).filename
+    location = os.path.basename(inspect.getframeinfo(frame).filename)
     return logger_base(log, line, location)
-
-
-def wagger(log):
-    frame = inspect.currentframe().f_back
-    line = inspect.getframeinfo(frame).positions.lineno
-    location = inspect.getframeinfo(frame).filename
-    return wagger_base(log, line, location)
-
-
-def egger(log):
-    frame = inspect.currentframe().f_back
-    line = inspect.getframeinfo(frame).positions.lineno
-    location = inspect.getframeinfo(frame).filename
-    return egger_base(log, line, location)
-
-
-def critter(log):
-    frame = inspect.currentframe().f_back
-    line = inspect.getframeinfo(frame).positions.lineno
-    location = inspect.getframeinfo(frame).filename
-    return critter_base(log, line, location)
-
-
-def fatal(log):
-    frame = inspect.currentframe().f_back
-    line = inspect.getframeinfo(frame).positions.lineno
-    location = inspect.getframeinfo(frame).filename
-    return fatal_base(log, line, location)
