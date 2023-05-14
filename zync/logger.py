@@ -3,6 +3,8 @@ import inspect
 import os
 
 
+ROOT_PATH = os.getcwd() + "/"
+
 W = "\033[39m"
 B = "\033[94m"
 G = "\033[92m"
@@ -83,15 +85,22 @@ bugger_base = Bugger("bugger")
 logger_base = Logger("logger")
 
 
+def strip_root_path(file_path, root_path):
+    relative_path = os.path.relpath(file_path, root_path)
+    return relative_path
+
+
 def bugger(log):
     frame = inspect.currentframe().f_back
     line = inspect.getframeinfo(frame).positions.lineno
-    location = os.path.basename(inspect.getframeinfo(frame).filename)
+    file_path = frame.f_code.co_filename
+    location = strip_root_path(file_path, ROOT_PATH)
     return bugger_base(log, line, location)
 
 
 def logger(log):
     frame = inspect.currentframe().f_back
     line = inspect.getframeinfo(frame).positions.lineno
-    location = os.path.basename(inspect.getframeinfo(frame).filename)
+    file_path = frame.f_code.co_filename
+    location = strip_root_path(file_path, ROOT_PATH)
     return logger_base(log, line, location)
