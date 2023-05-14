@@ -64,14 +64,14 @@ egger takes in a string and logs it with an ERROR level.
 from zync import egger
 
 # logging a string ERROR
-egger("debug message")
+egger("error message")
 
 # logging a variable ERROR
 message = "error message"
 egger(message)
 
 ###
-# returns: DEBUG debug message
+# returns: ERROR debug message
 ```  
 
 #### Slugger  
