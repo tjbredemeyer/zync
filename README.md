@@ -63,10 +63,10 @@ egger takes in a string and logs it with an ERROR level.
 ```python
 from zync import egger
 
-# logging a string DEBUG
+# logging a string ERROR
 egger("debug message")
 
-# logging a variable DEBUG
+# logging a variable ERROR
 message = "error message"
 egger(message)
 
