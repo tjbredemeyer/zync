@@ -92,6 +92,12 @@ slugger(string)
 # returns: test-string
 ```  
 
+### 3. TAIL LOG FILE
+
+```bash
+tail -f ./.zync.log
+```
+
 ## Author
 
 TJ Bredemeyer  
