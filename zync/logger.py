@@ -140,7 +140,7 @@ egger_base = Egger("egger")
 def get_relative_path(frame):
     """getting the relative path for logging position"""
     filename = inspect.getframeinfo(frame).filename
-    current_dir = os.path.dirname(os.path.abspath(__file__))
+    current_dir = os.getcwd()
     relative_path = os.path.relpath(filename, current_dir)
     return relative_path
 
@@ -151,7 +151,8 @@ def bugger(log):
     path = get_relative_path(frame)
     line = inspect.getframeinfo(frame).positions.lineno
     col = inspect.getframeinfo(frame).positions.col_offset
-    url = "%s:%s:%s" % (path, line, col)
+    href = "%s:%s:%s" % (path, line, col)
+    url = "file '" + href +"'"
     return bugger_base(log, line, url)
 
 
@@ -161,7 +162,8 @@ def logger(log):
     path = get_relative_path(frame)
     line = inspect.getframeinfo(frame).positions.lineno
     col = inspect.getframeinfo(frame).positions.col_offset
-    url = "%s:%s:%s" % (path, line, col)
+    href = "%s:%s:%s" % (path, line, col)
+    url = "file '" + href +"'"
     return logger_base(log, line, url)
 
 
@@ -171,5 +173,6 @@ def egger(log):
     path = get_relative_path(frame)
     line = inspect.getframeinfo(frame).positions.lineno
     col = inspect.getframeinfo(frame).positions.col_offset
-    url = "%s:%s:%s" % (path, line, col)
+    href = "%s:%s:%s" % (path, line, col)
+    url = "file '" + href +"'"
     return egger_base(log, line, url)

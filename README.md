@@ -23,6 +23,7 @@ from zync import *
 #### logger
 
 logger takes in a string and logs it with an INFO level.  
+```
 
 ```python
 from zync import logger
