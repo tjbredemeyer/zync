@@ -54,7 +54,7 @@ class EggerFormat(logging.Formatter):
 
     def format(self, record):
         """Formatting egger output"""
-        record.levelname = "egger"
+        record.levelname = "wegger"
         levelname = record.levelname.upper()
         record.levelname = levelname
         return super().format(record)
@@ -68,20 +68,18 @@ class Bugger:
         self.logger.setLevel(logging.DEBUG)
         file_handler = logging.FileHandler(".zync.log")
         formatter = BuggerFormat(
+            f"{W}{L}%(asctime)s {X}"
             f"{G}[{X}"
-            f"{G}%(levelname)s:{X}"
-            f"{G}{L}%(asctime)s{X}"
-            f"{G}]{X}"
-            f"{M}%(location)s{X}"
-            f"{G}> {X}"
+            f"{G}%(levelname)s{X}"
+            f"{G}] {X}"
+            f"{W}%(url)s {X}"
             f"%(message)s{X}",
-            datefmt="%H:%M:%S",
         )
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
 
-    def __call__(self, log, line, location):
-        self.logger.debug(log, extra={"line": line, "location": location})
+    def __call__(self, log, url):
+        self.logger.debug(log, extra={"url": url})
 
 
 class Logger:
@@ -92,20 +90,18 @@ class Logger:
         self.logger.setLevel(logging.INFO)
         file_handler = logging.FileHandler(".zync.log")
         formatter = LoggerFormat(
-            f"{Y}[{X}"
-            f"{Y}%(levelname)s:{X}"
-            f"{Y}{L}%(asctime)s{X}"
-            f"{Y}]{X}"
-            f"{M}%(location)s{X}"
-            f"{Y}> {X}"
+            f"{W}{L}%(asctime)s {X}"
+            f"{C}[{X}"
+            f"{C}%(levelname)s{X}"
+            f"{C}] {X}"
+            f"{W}%(url)s {X}"
             f"%(message)s{X}",
-            datefmt="%H:%M:%S",
         )
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
 
-    def __call__(self, log, line, location):
-        self.logger.info(log, extra={"line": line, "location": location})
+    def __call__(self, log, url):
+        self.logger.info(log, extra={"url": url})
 
 
 class Egger:
@@ -116,63 +112,54 @@ class Egger:
         self.logger.setLevel(logging.ERROR)
         file_handler = logging.FileHandler(".zync.log")
         formatter = EggerFormat(
+            f"{W}{L}%(asctime)s {X}"
             f"{R}[{X}"
-            f"{R}%(levelname)s:{X}"
-            f"{R}{L}%(asctime)s{X}"
-            f"{R}]{X}"
-            f"{M}%(location)s{X}"
-            f"{R}> {X}"
+            f"{R}%(levelname)s{X}"
+            f"{R}] {X}"
+            f"{W}%(url)s {X}"
             f"%(message)s{X}",
-            datefmt="%H:%M:%S",
         )
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
 
-    def __call__(self, log, line, location):
-        self.logger.error(log, extra={"line": line, "location": location})
+    def __call__(self, log, url):
+        self.logger.error(log, extra={"url": url})
 
 
 bugger_base = Bugger("bugger")
 logger_base = Logger("logger")
-egger_base = Egger("egger")
+wegger_base = Egger("wegger")
 
 
-def get_relative_path(frame):
+def link(frame):
     """getting the relative path for logging position"""
     filename = inspect.getframeinfo(frame).filename
     current_dir = os.getcwd()
-    relative_path = os.path.relpath(filename, current_dir)
-    return relative_path
+    path = os.path.relpath(filename, current_dir)
+    line = inspect.getframeinfo(frame).positions.lineno
+    col = inspect.getframeinfo(frame).positions.col_offset
+    # pylint disable=C0209
+    href = f"{path}:{line}:{col}"
+    href_link = "file '" + href + "'"
+    return href_link
 
 
 def bugger(log):
     """the bugger method"""
     frame = inspect.currentframe().f_back
-    path = get_relative_path(frame)
-    line = inspect.getframeinfo(frame).positions.lineno
-    col = inspect.getframeinfo(frame).positions.col_offset
-    href = "%s:%s:%s" % (path, line, col)
-    url = "file '" + href +"'"
-    return bugger_base(log, line, url)
+    url = link(frame)
+    return bugger_base(log, url)
 
 
 def logger(log):
     """the logger method"""
     frame = inspect.currentframe().f_back
-    path = get_relative_path(frame)
-    line = inspect.getframeinfo(frame).positions.lineno
-    col = inspect.getframeinfo(frame).positions.col_offset
-    href = "%s:%s:%s" % (path, line, col)
-    url = "file '" + href +"'"
-    return logger_base(log, line, url)
+    url = link(frame)
+    return logger_base(log, url)
 
 
-def egger(log):
+def wegger(log):
     """the egger method"""
     frame = inspect.currentframe().f_back
-    path = get_relative_path(frame)
-    line = inspect.getframeinfo(frame).positions.lineno
-    col = inspect.getframeinfo(frame).positions.col_offset
-    href = "%s:%s:%s" % (path, line, col)
-    url = "file '" + href +"'"
-    return egger_base(log, line, url)
+    url = link(frame)
+    return wegger_base(log, url)

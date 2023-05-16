@@ -5,6 +5,7 @@ Slugify is a simple string formatter to make strings URL safe.
 import re
 
 
+# pylint: disable=C0103
 def Slugger(value):
     """
     Slugger is a simple string formatter to make strings URL safe.

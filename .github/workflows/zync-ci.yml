@@ -1,9 +1,6 @@
-name: zync-ci
+name: zync-CI
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
   build:
@@ -28,6 +25,16 @@ jobs:
 
       - name: Run tests
         run: python -m unittest discover -s . -p "*test*.py"
+
+      - name: flake8
+        run: |
+          pip install flake8
+          flake8
+
+      - name: pylint
+        run: |
+          pip install pylint
+          pylint zync --disable=R $(git ls-files '*.py')
 
       - name: Package Installation
         run: |

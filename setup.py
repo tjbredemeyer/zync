@@ -1,3 +1,5 @@
+"""This is the setup file for zync."""
+
 from setuptools import setup
 from zync.main import (
     NAME,

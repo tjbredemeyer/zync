@@ -1,15 +1,20 @@
+"""sluggging test module"""
+
 import unittest
 from zync import Slugger, slugger
 
 
 class SlugifyTest(unittest.TestCase):
-    def test_slugify(self):
-        string = "This is a TEST!"
-        string_Slug = Slugger(string)
-        string_slug = slugger(string)
+    """slugging test class"""
 
-        assert string_Slug == "This-is-a-TEST"
-        assert string_slug == "this-is-a-test"
+    def test_slugify(self):
+        """slugging test method"""
+        string = "This is a TEST!"
+        slug1 = Slugger(string)
+        slug2 = slugger(string)
+
+        assert slug1 == "This-is-a-TEST"
+        assert slug2 == "this-is-a-test"
 
 
 if __name__ == "__main__":

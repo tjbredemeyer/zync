@@ -23,7 +23,6 @@ from zync import *
 #### logger
 
 logger takes in a string and logs it with an INFO level.  
-```
 
 ```python
 from zync import logger
@@ -57,19 +56,19 @@ bugger(message)
 # returns: DEBUG debug message
 ```  
 
-#### egger
+#### wegger
 
-egger takes in a string and logs it with an ERROR level.  
+wegger takes in a string and logs it with an ERROR level.  
 
 ```python
-from zync import egger
+from zync import wegger
 
 # logging a string ERROR
-egger("error message")
+wegger("error message")
 
 # logging a variable ERROR
 message = "error message"
-egger(message)
+wegger(message)
 
 ###
 # returns: ERROR debug message
